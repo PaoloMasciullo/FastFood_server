@@ -1,7 +1,7 @@
-const express = require('express'),
-    mongoose = require('mongoose'),
-    dotenv = require('dotenv'),
-    cors = require('cors');
+const express = require('express');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const cors = require('cors');
 
 const router = require('./router/index');
 
@@ -17,6 +17,6 @@ app.use('/', (req, res) => res.status(404).json({error: "Risorsa non trovata"}))
 
 mongoose.connect(process.env.DB_URI)
     .then(() => {
-        console.log("Connessiona al DB effettuata");
-        app.listen(process.env.PORT || 3000, () => console.log("Applicazione in ascolto"));
+        console.log("Connected database!");
+        app.listen(process.env.PORT, () => console.log("Listening application on port ", process.env.PORT));
     });
