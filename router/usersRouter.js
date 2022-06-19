@@ -1,11 +1,13 @@
 const express = require('express')
 const usersController = require('../controllers/usersController')
+const passport = require("passport");
 
-usersRouter=express.Router()
+usersRouter = express.Router()
 
-usersRouter.route('/users').put(usersController.updateUser).delete(usersController.removeUser)
-usersRouter.route('/users/registration').post(usersController.createUser)
-usersRouter.route('/users/login').post(usersController.authenticateUser)
+usersRouter.route('/').put(passport.authenticate('jwt', {session: false},usersController.updateUser))
+    .delete(passport.authenticate('jwt', {session: false},usersController.removeUser))
+usersRouter.route('/registration').post(usersController.createUser)
+usersRouter.route('/login').post(usersController.authenticateUser)
 
 
 
