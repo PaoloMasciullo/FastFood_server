@@ -1,8 +1,8 @@
 //creare modello utenti
 const mongoose = require('mongoose') //import del package necessario alla gestione del DB
 const passport = require('passport')
-const passport-local-mongoose = require('')
 
+//mongoose.connect('mongodb ecc passport-jwt)
 const userSchema= mongoose.Schema({
         name: String,
         surname: String,
@@ -11,6 +11,7 @@ const userSchema= mongoose.Schema({
             type: String,
             unique: true
         },
+        password:String,
         role: {
             type: String,
             enum: {
@@ -20,4 +21,6 @@ const userSchema= mongoose.Schema({
     }
 
 )
-//aggiungere plugin local mongoose per creare in automatico i campi password ecc
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;
