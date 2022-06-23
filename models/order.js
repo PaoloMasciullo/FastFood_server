@@ -1,6 +1,6 @@
-const moongose = require('mongoose');
+const mongoose = require('mongoose');
 
-const orderSchema = moongose.Schema({
+const orderSchema = mongoose.Schema({
     productList:[
         {
             type : mongoose.Types.ObjectId,
