@@ -13,11 +13,29 @@ module.exports = {
             .catch(e => res.status(500).json({error: e}));
     },
     addOrder: (req, res) => {
-            Order.create({
-                        productList: mongoose.Types.ObjectId(req.body.products),
-                        date: new Date(),
-                        user: mongoose.Types.ObjectId(req.body.uId),
-                    })
-                .then(() => res.json({message: 'Ordine effettuato!'}));
+        Order.create({
+            productList: mongoose.Types.ObjectId(req.body.products),
+            date: new Date(),
+            user: mongoose.Types.ObjectId(req.body.uId),
+        })
+            .then(() => res.json({message: 'Ordine effettuato!'}));
+    },
+    deleteOrder: (req, res) => {
+        try {
+            Order.findByIdAndRemove(req.params.id)
+                .then(data => {
+                    if (!data) {
+                        res.status(404).send({
+                            message: `Ordine non trovato, eliminazione fallita!`
+                        });
+                    } else {
+                        res.send({
+                            message: "L'ordine è stato eliminato correttamente!"
+                        });
+                    }
+                });
+        } catch (e) {
+            res.status(500).json({error: e});
         }
+    }
 }

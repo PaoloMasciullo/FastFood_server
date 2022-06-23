@@ -7,7 +7,7 @@ const orderSchema = mongoose.Schema({
             ref : 'Product'
         }
     ],
-    data : Date,
+    date : Date,
     user :{
         type : mongoose.Types.ObjectId,
         ref : 'User'
