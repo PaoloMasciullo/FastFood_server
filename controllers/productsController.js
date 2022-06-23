@@ -1,4 +1,4 @@
-const  Product = require('../models/product');
+const Product = require('../models/product');
 
 module.exports = {
     getProducts: (req, res) => {
@@ -8,9 +8,8 @@ module.exports = {
         Product.find(query).then(data => res.json(data))
             .catch(e => res.status(500).json({error: e}));
     },
-
-    getProductsById: (req, res) => {
-        Product.findById(req.param.id)
+    getProductById: (req, res) => {
+        Product.findById(req.params.id)
             .then(data => res.json(data))
             .catch(e => res.status(500).json({error: e}));
     },
@@ -21,5 +20,38 @@ module.exports = {
             description: req.body.description,
             cost: req.body.cost,
         }).then(() => res.json({message: 'Nuovo prodotto creato!'}));
+    },
+    deleteProduct: (req, res) => {
+        try {
+            Product.findByIdAndRemove(req.params.id)
+                .then(data => {
+                    if (!data) {
+                        res.status(404).send({
+                            message: `Prodotto non trovato, eliminazione fallita!`
+                        });
+                    } else {
+                        res.send({
+                            message: "Il prodotto è stato eliminato correttamente!"
+                        });
+                    }
+                });
+        } catch (e) {
+            res.status(500).json({error: e});
+        }
+
+    },
+    updateProduct: (req, res) => {
+        try {
+            Product.findByIdAndUpdate(req.params.id, req.body, {useFindAndModify: false})
+                .then(data => {
+                    if (!data) {
+                        res.status(404).send({
+                            message: "Prodotto non trovato, aggiornamento fallito!"
+                        });
+                    } else res.send({message: "Il prodotto è stato aggiornato correttamente!"});
+                });
+        } catch (e) {
+            res.status(500).json({error: e});
+        }
     }
 }
