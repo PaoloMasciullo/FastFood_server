@@ -1,7 +1,7 @@
 const moongose = require('mongoose');
 
 const orderSchema = moongose.Schema({
-    ProductList:[
+    productList:[
         {
             type : mongoose.Types.ObjectId,
             ref : 'Product'
