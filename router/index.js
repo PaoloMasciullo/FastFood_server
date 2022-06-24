@@ -9,9 +9,9 @@ const router = express.Router();
 router.use(methodOverride("_method",{
     methods: ["POST","GET"]
 }));
-router.use('/api/orders',passport.authenticate('jwt', {session: false}, ordersRouter));
-router.use('/api/products',passport.authenticate('jwt', {session: false}, productsRouter));
-router.use('/api/users',usersRouter);
+router.use('/api/orders', passport.authenticate('jwt', {session: false}, ordersRouter));
+router.use('/api/products', passport.authenticate('jwt', {session: false}, productsRouter));
+router.use('/api/users', usersRouter);
 
 router.get('//api/users/customer', passport.authenticate('jwt', {session: false}, (req, res) => {
 
