@@ -13,10 +13,12 @@ module.exports = {
             .catch(e => res.status(500).json({error: e}));
     },
     addOrder: (req, res) => {
+        let products = req.body.products;
         Order.create({
-            productList: mongoose.Types.ObjectId(req.body.products),
+            productList: [products],
             date: new Date(),
             user: mongoose.Types.ObjectId(req.body.uId),
+            total: req.body.total
         })
             .then(() => res.json({message: 'Ordine effettuato!'}));
     },
