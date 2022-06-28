@@ -6,9 +6,12 @@ const passport = require('passport');
 
 
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = 'Random string';
+opts.secretOrKey = 'Secret string';
 
 passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
+    console.log("received a authentication request")
+    console.log(jwt_payload)
+
     User.findOne({id: jwt_payload.id}, function(err, user) {
         if (err) {
             return done(err, false); //false significa che non abbiamo trovato l'utente, altrimenti avremmo ritornato l'utente
@@ -20,4 +23,5 @@ passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
             // or you could create a new account
         }
     });
+
 }));

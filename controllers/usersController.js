@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const User = require('../models/user')
-const {hashSync} = require('bcrypt') //ho bisogno di questa funzione per criptare la password
+const {hashSync, compareSync} = require('bcrypt') //ho bisogno di questa funzione per criptare la password
 const jwt = require('jsonwebtoken')
 
 module.exports = {
@@ -35,8 +35,10 @@ module.exports = {
                 error: err
             })
         })
-        //terminata la registrazione dobbiamo fare il redirect alla relativa pagina cliente o admin
-        if (req.body.role === 'admin') {
+        //terminata la registrazione dobbiamo fare il redirect alla pagina di login
+/*        let redirectPath = '/login';
+        if (redirectPath) res.redirect(redirectPath); //come si fa il login? */
+/*        if (req.body.role === 'admin') {
             //fai redirect a pagina di gestione menu dall'admin (vedi se serve percorso assoluto o va bene relativo)
             let redirectPath = '/admin';
             if (redirectPath) res.redirect(redirectPath); //verificare se funziona in React
@@ -45,11 +47,12 @@ module.exports = {
                 if (redirectPath) res.redirect(redirectPath);
 
             }
-        }
+        }*/
     }
     ,
     updateUser(req, res) {
         //può essere invocato solo dall'utente stesso attualmente loggato
+        console.log("received an update request")
         const id = req.token.payload.id; //da frontend gestire pre compilazione del form di aggiornamento
         User.findByIdAndUpdate(id,{name : req.body.name, surname : req.body.surname, email:req.body.email, cellular:req.body.cellular
         },
@@ -65,10 +68,11 @@ module.exports = {
     },
     removeUser(req, res) {
         //può essere invocato solo dall'utente stesso attualmente loggato
+        console.log("received a delete request")
         User.deleteOne({email : req.token.email}).then(user => {
             //if no user found
             if (!user) {
-                return res.status(401).send({
+                return res.status(404).send({
                     success: false,
                     message: "Could not find the user."
                 })
@@ -112,15 +116,14 @@ module.exports = {
             })
         })
         //facciamo il redirect alla pagina del utente/admin
-        if (req.body.role === 'admin') {
+/*        if (req.body.role === 'admin') {
             //fai redirect a pagina di gestione menu dall'admin (vedi se serve percorso assoluto o va bene relativo)
             let redirectPath = '/admin';
             if (redirectPath) res.redirect(redirectPath); //verificare se funziona in React
             else if (req.body.role === 'customer') {
                 let redirectPath = '/customer';
                 if (redirectPath) res.redirect(redirectPath);
-
             }
-        }
+        }*/
     }
 }
