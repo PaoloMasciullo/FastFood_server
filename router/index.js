@@ -8,7 +8,7 @@ const passport = require("passport");
 const router = express.Router();
 router.use(methodOverride("_method",{
     methods: ["POST","GET"]
-}));
+})); //serve per gestire eventuali richieste di put e delete
 
 router.use('/api/orders',passport.authenticate('jwt', {session: false}, ordersRouter));
 router.use('/api/products',passport.authenticate('jwt', {session: false}, productsRouter));

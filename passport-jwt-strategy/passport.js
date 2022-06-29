@@ -10,7 +10,7 @@ opts.secretOrKey = 'Secret string';
 
 passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
     console.log("received a authentication request")
-    console.log(jwt_payload)
+    console.log(jwt_payload) //console log per debug, si possono anche togliere una volta visto che funzioni
 
     User.findOne({id: jwt_payload.id}, function(err, user) {
         if (err) {
