@@ -101,7 +101,8 @@ module.exports = {
                 success: true,
                 message: "Logged in successfully",
                 token: "Bearer " + token,
-                role : payload.role
+                role : payload.role,
+                id: payload.id
             })
         })
     }

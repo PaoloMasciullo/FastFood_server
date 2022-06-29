@@ -17,7 +17,7 @@ module.exports = {
         Order.create({
             productList: [products],
             date: new Date(),
-            user: mongoose.Types.ObjectId(req.body.uId),
+            user: mongoose.Types.ObjectId(req.body.user),
             total: req.body.total
         })
             .then(() => res.json({message: 'Ordine effettuato!'}));
