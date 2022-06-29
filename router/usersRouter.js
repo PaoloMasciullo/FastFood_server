@@ -1,7 +1,6 @@
 const express = require('express')
 const usersController = require('../controllers/usersController')
 const passport = require("passport");
-const methodOverride = require('method-override')
 
 usersRouter = express.Router()
 
@@ -20,7 +19,6 @@ usersRouter.get('/customer', passport.authenticate('jwt', {session: false}) ,(re
             role: req.user.role,
         }
     })
-    //fai redirect a pagina di ordine utenti (si fa lato frontend con react router)
 })
 usersRouter.get('/admin', passport.authenticate('jwt', {session: false}), (req, res) => {
 
