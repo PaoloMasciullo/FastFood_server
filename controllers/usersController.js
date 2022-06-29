@@ -35,20 +35,6 @@ module.exports = {
                 error: err
             })
         })
-        //no questa cosa la facciamo da frontend
-        //terminata la registrazione dobbiamo fare il redirect alla pagina di login
-/*        let redirectPath = '/login';
-        if (redirectPath) res.redirect(redirectPath); //come si fa il login? */
-/*        if (req.body.role === 'admin') {
-            //fai redirect a pagina di gestione menu dall'admin (vedi se serve percorso assoluto o va bene relativo)
-            let redirectPath = '/admin';
-            if (redirectPath) res.redirect(redirectPath); //verificare se funziona in React
-            else if (req.body.role === 'customer') {
-                let redirectPath = '/customer';
-                if (redirectPath) res.redirect(redirectPath);
-
-            }
-        }*/
     }
     ,
     updateUser(req, res) {
@@ -87,11 +73,11 @@ module.exports = {
     },
     authenticateUser(req, res) {
         //qui quando l'utente vuole fare il login
-        console.log('Login post request')
+        console.log('Login post request') //stringhe di debug
         User.findOne({email: req.body.email}).then(user => {
             //if no user found
             if (!user) {
-                return res.status(401).send({
+                return res.status(404).send({
                     success: false,
                     message: "Could not find the user."
                 })
@@ -118,16 +104,5 @@ module.exports = {
                 role : payload.role
             })
         })
-        //questa cosa non serve si fa da frontend
-        //facciamo il redirect alla pagina del utente/admin
-/*        if (req.body.role === 'admin') {
-            //fai redirect a pagina di gestione menu dall'admin (vedi se serve percorso assoluto o va bene relativo)
-            let redirectPath = '/admin';
-            if (redirectPath) res.redirect(redirectPath); //verificare se funziona in React
-            else if (req.body.role === 'customer') {
-                let redirectPath = '/customer';
-                if (redirectPath) res.redirect(redirectPath);
-            }
-        }*/
     }
 }

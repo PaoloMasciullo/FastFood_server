@@ -23,13 +23,7 @@ usersRouter.get('/customer', passport.authenticate('jwt', {session: false}) ,(re
     //fai redirect a pagina di ordine utenti (si fa lato frontend con react router)
 })
 usersRouter.get('/admin', passport.authenticate('jwt', {session: false}), (req, res) => {
-   /* //sicuramente sbagliato, capire come gestire il payload del token
-        if (!req.role === 'admin') {
-            res.status(401).send({
-                success: false,
-                message: "Customers are not able to modify menu, if you have admin account, please use that one."
-            })
-        }*/ //questo tipo di autenticazione in base al ruolo la possiamo fare lato frontend con react router se proprio vogliamo
+
         res.status(200).send({
             success: true,
             user: {
@@ -41,8 +35,5 @@ usersRouter.get('/admin', passport.authenticate('jwt', {session: false}), (req, 
 
     }
 )
-
-
-
 
 module.exports = usersRouter
